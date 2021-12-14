@@ -39,12 +39,6 @@ luna.App.pre_init = ()=> {
 //------------------------------------------------------------------------------
 luna.App.pre_load = async ()=> {
     luna.RES.init();
-    await luna.RES.load_resources_with_info({
-        resources_to_load: [
-            // RESOURCES_TEXTURES_LOGO,
-            // "resources/fonts/ARCO.ttf"
-        ]
-    });
 }
 
 //------------------------------------------------------------------------------
@@ -69,7 +63,7 @@ luna.App.loop = ()=> {
 
 //------------------------------------------------------------------------------
 luna.App.resize = ()=> {
-    const element     = document.documentElement;
+    const element     = _get_canvas_div();
     const container   = luna.make_size(element.clientWidth, element.clientHeight);
     const target      = Demo_Options.DESIGN_SIZE;
     const policy      = Demo_Options.scale_policy;
@@ -78,15 +72,26 @@ luna.App.resize = ()=> {
     return scaled_rect;
 }
 
+//----------------------------------------------------------------------------//
+// Private Functions                                                          //
+//----------------------------------------------------------------------------//
+//------------------------------------------------------------------------------
+function _get_canvas_div()
+{
+    return document.getElementById("canvas_div");
+}
+
 
 //----------------------------------------------------------------------------//
 // Start                                                                      //
 //----------------------------------------------------------------------------//
+//------------------------------------------------------------------------------
 luna.App.display_hello();
 luna.App.set_config({
     title:       "doom_fire",
     version:     "0.0.1",
     target_fps:  60,
-    design_size: Demo_Options.DESIGN_SIZE
+    design_size: Demo_Options.DESIGN_SIZE,
+    append_to:   _get_canvas_div()
 });
 luna.App.start();

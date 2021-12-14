@@ -22,21 +22,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <title>stdmatt's Game of Life</title>
     <meta charset="UTF-8">
+
     <!-- Game's css -->
-    <link rel="stylesheet" href="./resources/css/main.css">
+        <link rel="stylesheet" href="./resources/css/main.css">
     <!-- Luna's libs -->
-    <script type="text/javascript" src="./libs/ark_luna/libs/pixi.js"></script>
-    <script type="text/javascript" src="./libs/ark_luna/libs/hack_pixi-particles.js"></script>
-    <script type="text/javascript" src="./libs/ark_luna/libs/dat.gui.js"></script>
-
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/stacktrace.js/2.0.2/stacktrace.min.js"></script>
-
+        <script type="text/javascript" src="./libs/ark_luna/libs/pixi.js"></script>
+        <script type="text/javascript" src="./libs/ark_luna/libs/hack_pixi-particles.js"></script>
+        <script type="text/javascript" src="./libs/ark_luna/libs/dat.gui.js"></script>
+        <!-- @XXX(stdmatt): [stacktrace should be local] - 14 Dec, 2021 at 09:40:32 -->
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/stacktrace.js/2.0.2/stacktrace.min.js"></script>
     <!-- Luna -->
-    <script type="module"          src="./libs/ark_luna/luna/luna.mjs"></script>
+        <script type="module" src="./libs/ark_luna/luna/luna.mjs"></script>
 </head>
 
 <body>
     <script type="module" src="./doom_fire/main.mjs"></script>
+    <div id="canvas_div">
+    </div>
 </body>
 </html>
