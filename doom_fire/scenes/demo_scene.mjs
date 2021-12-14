@@ -18,7 +18,18 @@
 //                                                                            //
 //---------------------------------------------------------------------------~//
 import { luna } from "../../libs/ark_luna/luna/luna.mjs";
-import * as Demo_Options from "../demo_options.mjs"
+import { Demo_Options } from "../demo_options.mjs"
+
+class Test
+{
+    constructor(...args)
+    {
+        this._items = args;
+        this.index = 0;
+        this.max_index = this._items.length;
+    }
+}
+
 
 //----------------------------------------------------------------------------//
 // Demo_Scene                                                                 //
@@ -33,7 +44,7 @@ export class Demo_Scene
         super();
 
         //
-        //
+        // Fire
         this._fire_pixels  = null;
         this._fire_palette = null;
 
@@ -46,6 +57,42 @@ export class Demo_Scene
         this._sprite         = null;
 
         this._setup_graphics();
+
+        // // Gui
+        // const general_folder = luna.GUI.dat().addFolder("General");
+        // general_folder.open();
+
+        // const scale_type_keys = Object.keys(luna.Scale_Utils);
+        // const overflow_types = [
+        //     "visible",
+        //     "hidden" ,
+        //     "scroll" ,
+        //     "auto"   ,
+        //     "initial",
+        // ]
+        // var gui_parameters = {
+        //     scale_type: scale_type_keys[0],
+        //     overflow_type: overflow_types[0]
+        // };
+
+        // var scale = general_folder
+        //     .add(gui_parameters, "scale_type", scale_type_keys)
+        //     .name("Scale Type")
+        //     .listen()
+        //     .onChange((v)=>{
+        //         console.log("Value changed to:  ", v);
+        //         Demo_Options.scale_policy = luna.Scale_Utils[v];
+        //         luna.App.update_size();
+        //     });
+
+        // var overflow = general_folder
+        //     .add(gui_parameters, "overflow_type", overflow_types)
+        //     .name("Overflow Type")
+        //     .listen()
+        //     .onChange((v)=>{
+        //         console.log("Value changed to:  ", v);
+        //         document.body.style.overflow = v;
+        //     });
     }
 
     //------------------------------------------------------------------------//
@@ -179,8 +226,8 @@ export class Demo_Scene
         }
 
         for(let i = 0; i < fire_width; ++i) {
-            const index = (fire_height -1) *  fire_width + i;
-            this._fire_pixels[index] = (this._fire_palette.length -2);
+            const index = (fire_height -1) * fire_width + i;
+            this._fire_pixels[index] = (this._fire_palette.length -1);
         }
     }
 }
