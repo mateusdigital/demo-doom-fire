@@ -58,8 +58,20 @@ export class Demo_Scene
         const fire_height = Demo_Options.FIRE_HEIGHT;
         const ctx         = this._buffer_context;
 
-        this.do_fire();
+        //
+        // Do Fire
+        for(let x = 0; x < fire_width; ++x) {
+            for(let y = 1; y < fire_height; ++y) {
+                const from = (y * fire_width + x);
+                const rand = Math.round(Math.random() * 3.0) & 3;
+                const to   = from - fire_width - rand + 1 ;
 
+                this._fire_pixels[to] = this._fire_pixels[from] - (rand & 1);
+            }
+        }
+
+        //
+        // Blit to canvas
         const image_data = ctx.getImageData(0, 0, fire_width, fire_height);
         for(let y = 0; y < fire_height; ++y) {
             for(let x = 0; x < fire_width; ++x) {
@@ -68,7 +80,6 @@ export class Demo_Scene
                 const palette_index = (fire_value > 0) ? fire_value : 0;
                 const rgb           = this._fire_palette[palette_index];
 
-
                 const image_data_index = (fire_index) * 4;
                 image_data.data[image_data_index + 0] = rgb.r;
                 image_data.data[image_data_index + 1] = rgb.g;
@@ -76,8 +87,10 @@ export class Demo_Scene
                 image_data.data[image_data_index + 3] = 255;
             }
         }
-
         ctx.putImageData(image_data, 0, 0);
+
+        //
+        // Update texture.
         this._sprite.texture.update();
     }
 
@@ -86,54 +99,6 @@ export class Demo_Scene
     {
         luna.log_verbose(luna.App.get_size());
     }
-
-    spread_fire(from)
-    {
-        var rand = Math.round(Math.random() * 3.0) & 3;
-        var to = from - Demo_Options.FIRE_WIDTH - rand + 1 ;
-        this._fire_pixels[to] = this._fire_pixels[from] - (rand & 1);
-    }
-
-    do_fire()
-    {
-        const fire_width  = Demo_Options.FIRE_WIDTH;
-        const fire_height = Demo_Options.FIRE_HEIGHT;
-
-        for(let x = 0; x < fire_width; ++x) {
-            for(let y = 1; y < fire_height; ++y) {
-                this.spread_fire(y * fire_width + x);
-            }
-        }
-
-        // let ss = "";
-        // for(let y = 0; y < fire_height; ++y) {
-        //     for(let x = 0; x < fire_width; ++x) {
-        //         const src_index = (y       * fire_width) + x;
-        //         ss += this._fire_pixels[src_index] + " ";
-        //     }
-        //     ss += "\n"
-        // }
-
-        // ss += "\n"
-        // ss += "\n"
-        // console.log(ss);
-
-        //     for(let y = fire_height -1; y >= 0; --y) {
-        // for(let x = 0; x < fire_width; ++x) {
-        //     for(let y = fire_height -1; y >= 0; --y) {
-        //         const src_index = (y       * fire_width) + x;
-        //         const dst_index = ((y - 1) * fire_width) + x;
-
-        //         var rand = Math.round(Math.random() * 3.0) & 3;
-
-        //         const src_value = this._fire_pixels[src_index];
-        //         const dst_value = src_value - (rand & 1);
-        //         this._fire_pixels[dst_index] = (dst_value >= 0) ? dst_value : 0;
-        //     }
-        // }
-    }
-
-
 
     //------------------------------------------------------------------------//
     // Helpers                                                                //
