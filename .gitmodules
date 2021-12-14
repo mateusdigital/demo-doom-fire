@@ -1,0 +1,3 @@
+[submodule "libs/ark_luna"]
+	path = libs/ark_luna
+	url = https://gitlab.com/arkadia_games/libs/ark_luna
