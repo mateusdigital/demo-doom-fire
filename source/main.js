@@ -32,16 +32,15 @@ __SOURCES = [
 
 const background_color = "black";
 
-class Demo_Options
-{
-    //------------------------------------------------------------------------//
-    // Constants                                                              //
-    //------------------------------------------------------------------------//
-    //--------------------------------------------------------------------------
-    static FIRE_WIDTH  = 320;
-    static FIRE_HEIGHT = 168;
-}
+function calc_max_size(w, h, pn) {
+    const aspect_ratio = (w / h);
+    const max_size     = Math.sqrt(pn * aspect_ratio);
 
+    const w_new = Math.min(max_size, w);
+    const h_new = Math.min(max_size / aspect_ratio, h);
+
+    return [to_int(w_new), to_int(h_new)];
+}
 
 class Demo_Scene
 {
@@ -53,12 +52,13 @@ class Demo_Scene
         this._fire_pixels  = null;
         this._fire_palette = null;
 
-        this._setup_fire();
+        const pixels_count = 320*320;
+        const max_size     = calc_max_size(get_canvas_width(), get_canvas_height(), pixels_count);
 
-        //
-        // Graphics.
-        this._buffer_canvas  = null;
-        this._buffer_context = null;
+        this.fire_width  = max_size[0];
+        this.fire_height = max_size[1];
+
+        this._setup_fire();
     }
 
     //------------------------------------------------------------------------//
@@ -67,8 +67,8 @@ class Demo_Scene
     //--------------------------------------------------------------------------
     on_update(dt)
     {
-        const fire_width  = Demo_Options.FIRE_WIDTH;
-        const fire_height = Demo_Options.FIRE_HEIGHT;
+        const fire_width  = this.fire_width;
+        const fire_height = this.fire_height;
         const ctx         = get_main_canvas_context();
 
         //
@@ -147,8 +147,8 @@ class Demo_Scene
         ];
 
         // Create the array that represents the fire with palette colors.
-        const fire_width   = Demo_Options.FIRE_WIDTH;
-        const fire_height  = Demo_Options.FIRE_HEIGHT
+        const fire_width   = this.fire_width;
+        const fire_height  = this.fire_height
         const pixels_count = (fire_width * fire_height);
 
         this._fire_pixels = [];
