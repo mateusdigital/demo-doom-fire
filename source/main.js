@@ -7,9 +7,9 @@
 //                   |___/\__\__,_|_| |_| |_|\__,_|\__|\__|                   //
 //                                                                            //
 //                                                                            //
-//  File      : demo_scene.mjs                                                //
-//  Project   : doom_fire                                                     //
-//  Date      : 13 Dec, 21                                                    //
+//  File      : main.mjs                                                      //
+//  Project   : lissajous                                                     //
+//  Date      : 14 Dec, 21                                                    //
 //  License   : GPLv3                                                         //
 //  Author    : stdmatt <stdmatt@pixelwizards.io>                             //
 //  Copyright : stdmatt - 2021                                                //
@@ -17,26 +17,37 @@
 //  Description :                                                             //
 //                                                                            //
 //---------------------------------------------------------------------------~//
-//----------------------------------------------------------------------------//
-// Import                                                                     //
-//----------------------------------------------------------------------------//
-//------------------------------------------------------------------------------
-import { luna } from "../../libs/ark_luna/luna/luna.mjs";
-import { Demo_Options } from "../demo_options.mjs"
 
 
 //----------------------------------------------------------------------------//
-// Demo_Scene                                                                 //
+// Constants                                                                  //
 //----------------------------------------------------------------------------//
 //------------------------------------------------------------------------------
-export class Demo_Scene
-    extends luna.Base_Scene
+__SOURCES = [
+    "/modules/demolib/modules/external/chroma.js",
+    "/modules/demolib/modules/external/gif.js/gif.js",
+
+    "/modules/demolib/source/demolib.js",
+];
+
+const background_color = "black";
+
+class Demo_Options
+{
+    //------------------------------------------------------------------------//
+    // Constants                                                              //
+    //------------------------------------------------------------------------//
+    //--------------------------------------------------------------------------
+    static FIRE_WIDTH  = 320;
+    static FIRE_HEIGHT = 168;
+}
+
+
+class Demo_Scene
 {
     //--------------------------------------------------------------------------
     constructor()
     {
-        super();
-
         //
         // Fire
         this._fire_pixels  = null;
@@ -48,45 +59,6 @@ export class Demo_Scene
         // Graphics.
         this._buffer_canvas  = null;
         this._buffer_context = null;
-        this._sprite         = null;
-
-        this._setup_graphics();
-
-        // // Gui
-        // const general_folder = luna.GUI.dat().addFolder("General");
-        // general_folder.open();
-
-        // const scale_type_keys = Object.keys(luna.Scale_Utils);
-        // const overflow_types = [
-        //     "visible",
-        //     "hidden" ,
-        //     "scroll" ,
-        //     "auto"   ,
-        //     "initial",
-        // ]
-        // var gui_parameters = {
-        //     scale_type: scale_type_keys[0],
-        //     overflow_type: overflow_types[0]
-        // };
-
-        // var scale = general_folder
-        //     .add(gui_parameters, "scale_type", scale_type_keys)
-        //     .name("Scale Type")
-        //     .listen()
-        //     .onChange((v)=>{
-        //         console.log("Value changed to:  ", v);
-        //         Demo_Options.scale_policy = luna.Scale_Utils[v];
-        //         luna.App.update_size();
-        //     });
-
-        // var overflow = general_folder
-        //     .add(gui_parameters, "overflow_type", overflow_types)
-        //     .name("Overflow Type")
-        //     .listen()
-        //     .onChange((v)=>{
-        //         console.log("Value changed to:  ", v);
-        //         document.body.style.overflow = v;
-        //     });
     }
 
     //------------------------------------------------------------------------//
@@ -97,7 +69,7 @@ export class Demo_Scene
     {
         const fire_width  = Demo_Options.FIRE_WIDTH;
         const fire_height = Demo_Options.FIRE_HEIGHT;
-        const ctx         = this._buffer_context;
+        const ctx         = get_main_canvas_context();
 
         //
         // Do Fire
@@ -129,42 +101,7 @@ export class Demo_Scene
             }
         }
         ctx.putImageData(image_data, 0, 0);
-
-        //
-        // Update texture.
-        this._sprite.texture.update();
     }
-
-    //--------------------------------------------------------------------------
-    on_resize()
-    {
-        luna.log_verbose(luna.App.get_size());
-    }
-
-    //------------------------------------------------------------------------//
-    // Helpers                                                                //
-    //------------------------------------------------------------------------//
-    //--------------------------------------------------------------------------
-    _setup_graphics()
-    {
-        // Create the canvas that we gonna draw...
-        this._buffer_canvas = document.createElement("canvas");
-        this._buffer_canvas.width  = Demo_Options.FIRE_WIDTH;
-        this._buffer_canvas.height = Demo_Options.FIRE_HEIGHT;
-
-        this._buffer_context = this._buffer_canvas.getContext("2d");
-
-        // Create a sprite that we can render...
-        const texture = PIXI.Texture.from(this._buffer_canvas);
-        this._sprite = luna.RES.create_sprite_with_texture(texture);
-        this._sprite.cacheAsBitmap = false;
-
-        luna.Layout.add_to_parent(this, this._sprite);
-
-        this._sprite.width  = luna.App.get_size().width;
-        this._sprite.height = luna.App.get_size().height;
-    }
-
     //--------------------------------------------------------------------------
     _setup_fire()
     {
@@ -224,4 +161,73 @@ export class Demo_Scene
             this._fire_pixels[index] = (this._fire_palette.length -1);
         }
     }
+}
+
+//----------------------------------------------------------------------------//
+// Variables                                                                  //
+//----------------------------------------------------------------------------//
+let demo = null;
+
+//----------------------------------------------------------------------------//
+// Setup / Draw                                                               //
+//----------------------------------------------------------------------------//
+//------------------------------------------------------------------------------
+function setup_standalone_mode()
+{
+    return new Promise((resolve, reject)=>{
+        demolib_load_all_scripts(__SOURCES).then(()=> { // Download all needed scripts.
+            // Create the standalone canvas.
+            const canvas = document.createElement("canvas");
+
+            canvas.width            = window.innerWidth;
+            canvas.height           = window.innerHeight;
+            canvas.style.position   = "fixed";
+            canvas.style.left       = "0px";
+            canvas.style.top        = "0px";
+            canvas.style.zIndex     = "-100";
+
+            document.body.appendChild(canvas);
+
+            // Setup the listener for gif recording.
+            gif_setup_listeners();
+
+            resolve(canvas);
+        });
+    });
+}
+
+//------------------------------------------------------------------------------
+function setup_common(canvas)
+{
+    set_random_seed();
+    set_main_canvas(canvas);
+
+    demo = new Demo_Scene();
+
+    start_draw_loop(draw);
+}
+
+
+
+//------------------------------------------------------------------------------
+function demo_main(user_canvas)
+{
+    if(!user_canvas) {
+        setup_standalone_mode().then((canvas)=>{
+            setup_common(canvas);
+        });
+    } else {
+        canvas = user_canvas;
+        setup_common();
+    }
+
+}
+
+//------------------------------------------------------------------------------
+function draw(dt)
+{
+    begin_draw();
+        clear_canvas(background_color);
+        demo.on_update(dt);
+    end_draw();
 }
