@@ -58,6 +58,9 @@ class Demo_Scene
         this.fire_width  = max_size[0];
         this.fire_height = max_size[1];
 
+        this.scale = (get_canvas_width() / this.fire_width);
+
+        get_main_canvas_context().scale(this.scale, this.scale)
         this._setup_fire();
     }
 
@@ -69,7 +72,7 @@ class Demo_Scene
     {
         const fire_width  = this.fire_width;
         const fire_height = this.fire_height;
-        const ctx         = get_main_canvas_context();
+        const ctx         = this.context;
 
         //
         // Do Fire
@@ -101,6 +104,8 @@ class Demo_Scene
             }
         }
         ctx.putImageData(image_data, 0, 0);
+
+        get_main_canvas_context().drawImage(this.context.canvas, 0, 0);
     }
     //--------------------------------------------------------------------------
     _setup_fire()
@@ -150,6 +155,10 @@ class Demo_Scene
         const fire_width   = this.fire_width;
         const fire_height  = this.fire_height
         const pixels_count = (fire_width * fire_height);
+
+        this.context = document.createElement('canvas').getContext("2d");
+        this.context.canvas.width  = fire_width;
+        this.context.canvas.height = fire_height;
 
         this._fire_pixels = [];
         for(let i = 0; i < pixels_count; ++i) {
