@@ -216,20 +216,24 @@ function setup_common(canvas)
     start_draw_loop(draw);
 }
 
-
-
 //------------------------------------------------------------------------------
 function demo_main(user_canvas)
 {
+    // No canvas, meanings that we are standalone (fullscreen) mode.
     if(!user_canvas) {
         setup_standalone_mode().then((canvas)=>{
             setup_common(canvas);
         });
-    } else {
-        canvas = user_canvas;
-        setup_common();
     }
+    // We got a canvas, meaning that we are running in embedded mode.
+    else {
+        // Resize the canvas to the size of the container.
+        const container    = user_canvas.parentElement;
+        user_canvas.width  = container.clientWidth;
+        user_canvas.height = container.clientHeight;
 
+        setup_common(user_canvas);
+    }
 }
 
 //------------------------------------------------------------------------------
