@@ -1,32 +1,51 @@
-# Game of Life
+# DOOM FIRE!
 
-**Made with <3 by [stdmatt](http://stdmatt.com).**
+**Made with <3 by [mateus.digital](https://mateus.digital).**
 
-<!--  -->
-## Description:
 
 <p align="center">
-    <img src="./res/game_of_life.gif"/>
+    <img style="border-radius: 10px;" src="./res/readme.gif"/>
 </p>
 
+## Description:
 
-Simple Game of Life implemtation ;D
-You can see it running [here](http://stdmatt.com/deploy/demos/game_of_life/latest/)
+DOOM FIRE! is a creative experience inspired by the [amazing blog](https://fabiensanglard.net/doom_fire_psx/index.html) post of [Fabian Sanglard](https://fabiensanglard.net/about/index.html).
+
+
+You can [check it online](https://mateus.digital/doom_fire).
+
+<br>
 
 As usual, you are **very welcomed** to **share** and **hack** it.
 
-<!--  -->
-## Dependencies:
 
-* [mcow_js_core](https://stdmatt.com/projects/libs/js/mcow_js_core.html)
-* [mcow_js_canvas](https://stdmatt.com/projects/libs/js/mcow_js_canvas.html)
+## Building
 
-<!--  -->
+
+```bash
+git clone https://github.com/mateusdigital/doom_fire
+cd doom_fire
+./scripts/build-static.sh      ## Builds the webpage for the project.
+```
+
+
+## Thanks to:
+
+- [Fabian Sanglard](https://fabiensanglard.net/about/index.html).
+
+
 ## License:
 
 This software is released under [GPLv3](https://www.gnu.org/licenses/gpl-3.0.en.html).
 
-<!--  -->
+
 ## Others:
 
-There's more FLOSS things at [stdmatt.com](https://stdmatt.com) :)
+- Email: hello@mateus.digital
+- Website: https://mateus.digital
+- Itch.io: https://mateusdigital.itch.io
+- Linkedin: https://www.linkedin.com/in/mateusdigital
+- Twitter: https://www.twitter.com/_mateusdigital
+- Youtube: https://www.youtube.com/@_mateusdigital
+
+There's more FLOSS things at [mateus.digital](https://mateus.digital) :)
