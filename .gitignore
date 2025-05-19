@@ -1,2 +1,3 @@
-.buildno
-docs/
+_build/
+_dist/
+_out/

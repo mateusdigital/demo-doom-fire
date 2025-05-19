@@ -1,0 +1,39 @@
+{
+  "name": "doom-fire",
+  "description": "Is a creative experience inspired by the blog post of Fabian Sanglard",
+  "version": "2.1.1",
+  "build": 16,
+  "scripts": {
+    "build-clean": "pwsh -ExecutionPolicy Bypass -File ./scripts/build-clean.ps1",
+    "build-demo": "pwsh -ExecutionPolicy Bypass -File ./scripts/build-demo.ps1",
+    "build-all": "npm run build-clean && npm run build-demo",
+    "package": "pwsh -ExecutionPolicy Bypass -File ./scripts/generate-release-zip.ps1",
+    "build-project-web-page": "pwsh -ExecutionPolicy Bypass -File ./scripts/build-project-web-page.ps1",
+    "deploy-project-web-page": "bash ./scripts/deploy-project-web-page.sh",
+    "run-all": "npm run build-all && npm run package && npm run build-project-web-page && npm run deploy-project-web-page"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mateusdigital/doom-fire.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mateusdigital/doom-fire/issues"
+  },
+  "homepage": "https://mateus.digital/projects/doom-fire",
+  "keywords": [
+    "doom",
+    "javascript",
+    "canvas",
+    "retro",
+    "demo",
+    "demoscene",
+    "creative-coding",
+    "mateus.digital"
+  ],
+  "author": {
+    "name": "Mateus Mesquita",
+    "email": "hello@mateus.digital",
+    "url": "https://mateus.digital"
+  },
+  "license": "GPL-3.0-or-later"
+}
