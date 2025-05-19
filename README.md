@@ -6,7 +6,7 @@
 <!-- ----------------------------------------------------------------------- -->
 <p align="center">
     <a href="https://mateus.digital/doom-fire">
-        <img style="border-radius: 10px;" src="./_project-resources/readme.gif"/>
+        <img style="border-radius: 10px;" src="https://raw.githubusercontent.com/mateusdigital/doom-fire/refs/heads/main/_project-resources/readme.gif"/>
     </a>
 </p>
 
