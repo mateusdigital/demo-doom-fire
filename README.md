@@ -9,7 +9,7 @@
 </p>
 
 <!-- Badges -->
-[![Latest release](https://img.shields.io/github/v/release/mateusdigital/doom-fire?label=Latest%20release&style=for-the-badge)](https://github.com/mateusdigital/doom-fire/releases)
+[![Latest release](https://img.shields.io/github/v/tag/mateusdigital/doom-fire?label=Latest%20release&style=for-the-badge)](https://github.com/mateusdigital/doom-fire/releases)
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/mateusdigital/new-website?style=for-the-badge)
 [![GitHub commit activity](https://img.shields.io/github/commit-activity/t/mateusdigital/doom-fire?style=for-the-badge)](https://github.com/mateusdigital/doom-fire/commits)
 [![Stars](https://img.shields.io/github/stars/mateusdigital/doom-fire?style=for-the-badge)](https://github.com/mateusdigital/doom-fire/stargazers)
