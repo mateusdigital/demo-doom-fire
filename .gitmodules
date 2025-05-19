@@ -1,6 +1,0 @@
-[submodule "modules/demolib_loader"]
-	path = modules/demolib_loader
-	url = https://github.com/mateus-earth/demolib_loader
-[submodule "modules/demolib"]
-	path = modules/demolib
-	url = https://github.com/mateus-earth/demolib
