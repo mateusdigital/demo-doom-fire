@@ -5,7 +5,9 @@
 
 <!-- ----------------------------------------------------------------------- -->
 <p align="center">
-    <img style="border-radius: 10px;" src="./_project-resources/readme.gif"/>
+    <a href="https://mateus.digital/doom-fire">
+        <img style="border-radius: 10px;" src="./_project-resources/readme.gif"/>
+    </a>
 </p>
 
 <!-- Badges -->
@@ -75,17 +77,6 @@ Just open the ```index.html```
 
 This software is released under [GPLv3](https://www.gnu.org/licenses/gpl-3.0.en.html).
 
-
-
-<!-- ----------------------------------------------------------------------- -->
-## Info:
-
-**Target Platform:**
-- Web
-
-**Tech:**
-- Javascript
-- Canvas API
 
 <!-- ----------------------------------------------------------------------- -->
 ## Others:
