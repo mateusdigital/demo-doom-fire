@@ -14,7 +14,7 @@
 [![GitHub commit activity](https://img.shields.io/github/commit-activity/t/mateusdigital/doom-fire?style=for-the-badge)](https://github.com/mateusdigital/doom-fire/commits)
 [![Stars](https://img.shields.io/github/stars/mateusdigital/doom-fire?style=for-the-badge)](https://github.com/mateusdigital/doom-fire/stargazers)
 ![GitHub License](https://img.shields.io/github/license/mateusdigital/doom-fire?style=for-the-badge)
-![Website](https://img.shields.io/website?url=https%3A%2F%2Fmateus.digital%2Findex.html&style=for-the-badge&logo=web)
+[![Website](https://img.shields.io/website?url=https%3A%2F%2Fmateus.digital/doom-fire%2Findex.html&style=for-the-badge&logo=web)](https://mateus.digital/doom-fire)
 
 
 
