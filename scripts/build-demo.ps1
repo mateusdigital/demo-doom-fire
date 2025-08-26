@@ -10,7 +10,7 @@
 ##                      O      *        '       .                             ##
 ##                                                                            ##
 ##  File      : build-demo.ps1                                                ##
-##  Project   : doom_fire                                                     ##
+##  Project   : mateus.digital                                                ##
 ##  Date      : 2025-05-14                                                    ##
 ##  License   : See project's COPYING.TXT for full info.                      ##
 ##  Author    : mateus.digital <hello@mateus.digital>                         ##
@@ -24,54 +24,58 @@
 $ErrorActionPreference = "Stop"
 
 ## -----------------------------------------------------------------------------
-$OUTPUT_DIR_PATH  = "./_build/web-release";
-$BUMP_VERSION_EXE = "./scripts/bump-version.ps1";
+$OUTPUT_DIR  = "./_build/web-release";
 
+$PACKAGE_JSON = (Get-Content "./package.json" | ConvertFrom-Json);
+$DEMO_NAME    = $PACKAGE_JSON.name;
+$DEMO_TAGS    = $PACKAGE_JSON.keywords;
+$DEMO_VERSION = $PACKAGE_JSON.version;
+$DEMO_BUILD   = $PACKAGE_JSON.build;
 
-
-
-## -----------------------------------------------------------------------------
-& $BUMP_VERSION_EXE -BumpBuild;
-
-$DEMO_NAME    = "DOOM FIRE!"; ## @TODO(md): Get from package.json
-$DEMO_TAGS    = @(
-    "doom",
-    "javascript",
-    "canvas",
-    "retro",
-    "demo",
-    "demoscene",
-    "creative-coding",
-    "mateus.digital"
-);
-
-$DEMO_VERSION = (& $BUMP_VERSION_EXE -ShowVersion);
-$DEMO_BUILD   = (& $BUMP_VERSION_EXE -ShowBuild);
 
 Write-Host "==> Building for Web";
-Write-Host "DEMO VERSION: ${DEMO_VERSION}";
+Write-Host "DEMO VERSION: ${DEMO_VERSION}(${DEMO_BUILD})";
 
 
+## --- Bump the Version --------------------------------------------------------
+if( -not $DEMO_BUILD ) {
+  $DEMO_BUILD = 0;
+}
 
-##------------------------------------------------------------------------------
-Remove-Item -Recurse -Force "${OUTPUT_DIR_PATH}" -ErrorAction SilentlyContinue;
-New-Item -Type Directory "${OUTPUT_DIR_PATH}" -Force;
+$DEMO_BUILD = [int]$DEMO_BUILD + 1;
 
-## Sources
-Copy-Item -Recurse "./source/*" "${OUTPUT_DIR_PATH}";
-(Get-Content "${OUTPUT_DIR_PATH}/index.html")     `
-    -replace "__DEMO_NAME__",    "${DEMO_NAME}" `
-    -replace "__DEMO_TAGS__",    "${DEMO_TAGS}" `
-    -replace "__DEMO_VERSION__", "${DEMO_VERSION}" `
-    -replace "__DEMO_BUILD__",   "${DEMO_BUILD}"   `
+$PACKAGE_JSON.build = $DEMO_BUILD;
+$PACKAGE_JSON | ConvertTo-Json -Depth 10 | Set-Content "./package.json";
+
+
+## --- Clean Output directory --------------------------------------------------
+Remove-Item                      `
+  -Recurse -Force                `
+  -ErrorAction SilentlyContinue  `
+  "${OUTPUT_DIR}"           `
+;
+
+New-Item -Type Directory -Force  `
+  "${OUTPUT_DIR}" | Out-Null
+;
+
+
+## --- Copy source files ------------------------------------------------------
+Copy-Item -Recurse      `
+  "./source/*"          `
+  "${OUTPUT_DIR}";
+
+(Get-Content "${OUTPUT_DIR}/index.html")                    `
+    -replace "__DEMO_NAME__",    "${DEMO_NAME}"                  `
+    -replace "__DEMO_TAGS__",    "${DEMO_TAGS}"                  `
+    -replace "__DEMO_VERSION__", "${DEMO_VERSION}"               `
+    -replace "__DEMO_BUILD__",   "${DEMO_BUILD}"                 `
     -replace "__DEMO_DATE__",    (Get-Date -Format "yyyy-MM-dd") `
-| Set-Content "${OUTPUT_DIR_PATH}/index.html"
+| Set-Content "${OUTPUT_DIR}/index.html";
 
-## Libs
-Copy-Item -Recurse "./modules" "${OUTPUT_DIR_PATH}/modules";
-
-## Resources
-Copy-Item -Recurse "./resources/*" "${OUTPUT_DIR_PATH}";
+## --- Copy libs and resources -------------------------------------------------
+Copy-Item -Recurse "./modules"     "${OUTPUT_DIR}/modules";
+Copy-Item -Recurse "./resources/*" "${OUTPUT_DIR}";
 
 
 ## -----------------------------------------------------------------------------
