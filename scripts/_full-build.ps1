@@ -22,7 +22,7 @@
 
 ## -----------------------------------------------------------------------------
 & ./scripts/build-clean.ps1;
-& ./scripts/build-game.ps1;
+& ./scripts/build-demo.ps1;
 & ./scripts/build-project-web-page.ps1;
 & ./scripts/generate-release-zip.ps1;
 & ./scripts/deploy-project.ps1
