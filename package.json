@@ -2,7 +2,7 @@
   "name": "doom-fire",
   "description": "Is a creative experience inspired by the blog post of Fabian Sanglard",
   "version": "2.2.0",
-  "build": 38,
+  "build": 39,
   "repository": {
     "type": "git",
     "url": "https://github.com/mateusdigital/doom-fire.git"
